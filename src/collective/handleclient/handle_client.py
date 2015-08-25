@@ -1,5 +1,6 @@
 """HandleClient's main class"""
 
+import os
 import logging
 import requests
 
@@ -164,7 +165,11 @@ class HandleClient(UniqueObject, SimpleItem):
 
     def _updateSession(self, verify_ssl=False):
         self.session = requests.Session()
-        self.session.auth = (self.username, self.password)
+        if not self.password:
+            password = os.environ['HANDLE_PASSWORD']
+        else:
+            password = self.password    
+        self.session.auth = (self.username, password)
         self.session.verify = verify_ssl
         self.session.headers.update({
             'Cache-Control': 'no-cache',
