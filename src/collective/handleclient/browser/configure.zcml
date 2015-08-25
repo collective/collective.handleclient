@@ -1,0 +1,75 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.handleclient">
+
+  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
+  <include package="z3c.jbot" file="meta.zcml" />
+  <browser:jbot
+      directory="overrides"
+      layer="collective.handleclient.interfaces.ICollectiveHandleclientLayer"
+      />
+
+  <!-- Publish static files -->
+  <browser:resourceDirectory
+      name="collective.handleclient"
+      directory="static"
+      />
+
+  <!-- Define a custom delete permission -->
+  <permission
+    id="handleclient.deletehandle"
+    title="Handle Client: Delete Handle"
+  />
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="handle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="handle"
+	permission="zope2.View"
+	/>
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="hasHandle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="hasHandle"
+	permission="zope2.View"
+	/>
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="createHandle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="create"
+	permission="cmf.ModifyPortalContent"
+	/>
+
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="readHandle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="read"
+	permission="cmf.ModifyPortalContent"
+	/>
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="updateHandle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="update"
+	permission="cmf.ModifyPortalContent"
+	/>
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="deleteHandle"
+	class="collective.handleclient.browser.handle.HandleView"
+	attribute="delete"
+	permission="handleclient.deletehandle"
+	/>
+
+</configure>

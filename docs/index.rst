@@ -1,0 +1,5 @@
+====================
+collective.handleclient
+====================
+
+User documentation

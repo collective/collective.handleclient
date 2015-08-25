@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.handleclient">
+
+  <includeDependencies package="." />
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include package=".browser" />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="collective.handleclient"
+      directory="profiles/default"
+      description="Installs the collective.handleclient add-on which 
+           enables the registration of persistent identifiers through 
+           a Handle server."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:importStep
+      name="collective.handleclient-postInstall"
+      title="collective.handleclient post_install import step"
+      description="Post install import step from collective.handleclient"
+      handler=".setuphandlers.post_install">
+  </genericsetup:importStep>
+
+  <cmf:registerDirectory
+      name="skins"
+      directory="skins"
+      recursive="True"
+      />
+
+
+</configure>

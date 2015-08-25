@@ -1,0 +1,12 @@
+[default]
+title=Handle Client Setup
+
+[validators]
+validators=prefs_handleclient_validate
+validators..Save=prefs_handleclient_validate
+
+[actions]
+action.success=traverse_to:string:prefs_handleclient_set
+action.success..Save=traverse_to:string:prefs_handleclient_set
+action.success..Cancel=redirect_to:string:plone_control_panel
+action.failure=traverse_to:string:prefs_handleclient_form

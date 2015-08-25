@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="handleclient" meta_type="Filesystem Directory View"
+    directory="collective.handleclient:skins/handleclient"/>
+ <skin-path name="*">
+  <layer name="handleclient"
+     insert-after="custom"/>
+ </skin-path>
+</object>

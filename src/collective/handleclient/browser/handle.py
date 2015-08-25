@@ -1,0 +1,64 @@
+from zope.annotation import IAnnotations
+from Products.Five.browser import BrowserView
+from Products.CMFCore.utils import getToolByName
+
+KEY = 'collective.handleclient.handle'  # this should be in config
+
+class HandleView(BrowserView):
+    """View methods to deal with handle pids"""
+
+    @property
+    def client(self):
+        return getToolByName(self.context, 'handle_client')
+
+    def hasHandle(self):
+        """
+        Returns True if the context is registered.
+        False otherwise
+        """
+        if self.handle() is None:
+            return False
+        return True
+
+    def handle(self):
+        """
+        Looks up the handle in the context's annotation. 
+        Returns None if not found.
+        """
+        annotations = IAnnotations(self.context)
+        return annotations.get(KEY, None)
+
+    def create(self):
+        """
+        Register the object's UID as PID in the handle system
+        Returns the registered location on success
+        Raises HandleError on failure
+        """
+        return self.client.create(self.context)
+
+    def read(self):
+        """
+        Gets the current registration from the server 
+        Returns the registered location on success
+        Raises HandleError on failure
+        """
+        return self.client.read(self.context)
+
+    def update(self):
+        """
+        Updates the existing registration with the current 
+        target URL.
+        Returns the registered location on success.
+        Raises HandleError on failure
+        """
+        return self.client.update(self.context)       
+
+    def delete(self):
+        """
+        Deletes the existing registration
+        Returns None on success.
+        Raises HandleError on failure
+        """
+        return self.client.delete(self.context)       
+
+        

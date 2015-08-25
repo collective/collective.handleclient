@@ -1,0 +1,92 @@
+<html metal:use-macro="here/prefs_main_template/macros/master" i18n:domain="collective.handleclient"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+
+
+
+    <div metal:fill-slot="prefs_configlet_main"
+      tal:define="errors options/state/getErrors">
+      <h1 i18n:translate="heading_handleclient_setup">Handle client configuration</h1>
+
+      <a href=""
+        class="link-parent"
+        tal:attributes="href string: $portal_url/plone_control_panel"
+        i18n:domain="plone" i18n:translate="label_up_to_plone_setup">
+        Up to Plone Setup
+      </a>
+
+      <fieldset id="handleprefs_global"
+                style="display:block">
+        <legend i18n:translate="legend_handleprefs_global">
+            Handle client configuration
+		</legend>
+
+		<dl>
+			<dt><b>baseurl</b></dt>
+			<dd>
+				The URL to the Handle service to be used
+			</dd>
+            <dt><b>username</b></dt>
+            <dd>
+            	The username of an account at the server specified above
+	      (typically identical with the prefix)
+            </dd>
+            <dt><b>prefix</b></dt>
+            <dd>
+                The handle prefix to be used (if left empty the
+			username is taken)
+            </dd>
+            <dt><b>password</b></dt>
+            <dd>
+                The password for the user specified above
+            </dd>
+		</dl>
+		
+        <p>&nbsp;</p>
+		
+        <form action=""
+              name="reconfig"
+              method="post"
+              class="enableUnloadProtection"
+              tal:attributes="action string:$portal_url/prefs_handleclient_form"
+              tal:define="config python:here.handle_client.getConfiguration;">
+       
+            <table>
+               <tr>
+                  <th i18n:translate="heading_baseurl">baseurl</th>
+                  <td><input type="text" name="config.baseurl:record" size="60"
+		    tal:attributes="value config/baseurl|nothing"/></td>
+               </tr>
+               <tr>
+                  <th i18n:translate="heading_username">username</th>
+                  <td><input type="text" name="config.username:record" size="60"
+		    tal:attributes="value config/username|nothing" /></td>
+               </tr>
+               <tr>
+                  <th i18n:translate="heading_prefix">prefix</th>
+                  <td><input type="text" name="config.prefix:record" size="60"
+		    tal:attributes="value config/prefix|nothing" /></td>
+               </tr>
+               <tr>
+                  <th i18n:translate="heading_password">password</th>
+                  <td><input type="password" name="config.password:record" size="60"
+		    tal:attributes="value config/password|nothing" /></td>
+               </tr>
+            </table>
+
+            <p>
+               <input class="context" type="submit" value="Save"
+                      i18n:attributes="value button_save;"/>
+            </p>
+            <input type="hidden" name="form.submitted" value="1" />
+         </form>
+
+      </fieldset>
+            
+      <div class="visualClear"><!-- --></div>
+
+    </div>
+
+</html>
