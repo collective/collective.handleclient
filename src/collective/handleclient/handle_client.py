@@ -7,7 +7,6 @@ import requests
 # Zope stuff
 from zope.annotation import IAnnotations
 from Globals import InitializeClass 
-from persistent.list import PersistentList
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 
