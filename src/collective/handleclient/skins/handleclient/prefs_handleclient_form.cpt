@@ -51,7 +51,7 @@
               method="post"
               class="enableUnloadProtection"
               tal:attributes="action string:$portal_url/prefs_handleclient_form"
-              tal:define="config python:here.handle_client.getConfiguration;">
+              tal:define="config here/handle_client/getConfiguration">
        
             <table>
                <tr>
