@@ -5,28 +5,35 @@
       metal:use-macro="context/main_template/macros/master">
 
     <metal:block fill-slot="main">
-            <h3>Persistent Identifier</h3>
+            <h2>Persistent Identifier for 
+	    "<span tal:content="here/Title">title</span>"</h2>
 	    <p>
-	    This site supports registering a persistent identifier (PID) for 
-	    this content using a Handle-based Service. 
+	      This site supports registering a persistent identifier (PID) for 
+	      this content using a Handle-based Service. 
 	    </p>
 	    <div tal:condition="view/hasHandle">
 	        <p>
-	        This item is registered and has the handle 
-		<span tal:content="view/handle">handle</span>.
+	          This item is registered and has the handle 
+		  <span tal:content="view/handle">handle</span>.
+		</p>
+		<p tal:condition="view/hasDeletePermission">
+		  To unregister this object 
+		  <a href="./deleteHandle?redirect=True">click here</a>.
+		</p>
+		<p tal:condition="not:view/hasDeletePermission">
+		  To unregister this object contact site administration.
 		</p>
 		<p>
-		To unregister this object 
-		<a href="./deleteHandle?redirect=True">click here</a>.
+		  <a href="./readHandle" target="_blank">Registration details</a>
 		</p>
 	    </div>
 	    <div tal:condition="not:view/hasHandle">
 	        <p>
-		This item is not registered.
+		  This item is not registered.
 		</p>
 		<p>
-		To get a handle for this object 
-		<a href="./createHandle?redirect=True">click here</a>.
+		  To get a handle for this object 
+		  <a href="./createHandle?redirect=True">click here</a>.
 	    </div>
     </metal:block>
 

@@ -1,4 +1,5 @@
 from zope.annotation import IAnnotations
+from AccessControl import getSecurityManager
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
@@ -69,5 +70,11 @@ class HandleView(BrowserView):
         baseurl = self.context.absolute_url()
         return self.request.response.redirect(baseurl + "/handle_view")
          
-
-        
+    def hasDeletePermission(self):
+        """
+        Helper method to determine whether the current user
+        is allowed to unregister a handle.
+        """
+        sm = getSecurityManager()
+        return sm.checkPermission("Handle Client: Delete Handle", 
+                                  self.context)
