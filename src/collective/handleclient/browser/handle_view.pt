@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master">
+
+    <metal:block fill-slot="main">
+            <h3>Persistent Identifier</h3>
+	    <p>
+	    This site supports registering a persistent identifier (PID) for 
+	    this content using a Handle-based Service. 
+	    </p>
+	    <div tal:condition="view/hasHandle">
+	        <p>
+	        This item is registered and has the handle 
+		<span tal:content="view/handle">handle</span>.
+		</p>
+		<p>
+		To unregister this object 
+		<a href="./deleteHandle?redirect=True">click here</a>.
+		</p>
+	    </div>
+	    <div tal:condition="not:view/hasHandle">
+	        <p>
+		This item is not registered.
+		</p>
+		<p>
+		To get a handle for this object 
+		<a href="./createHandle?redirect=True">click here</a>.
+	    </div>
+    </metal:block>
+
+</html>

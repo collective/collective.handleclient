@@ -28,13 +28,17 @@ class HandleView(BrowserView):
         annotations = IAnnotations(self.context)
         return annotations.get(KEY, None)
 
-    def create(self):
+    def create(self, redirect=False):
         """
         Register the object's UID as PID in the handle system
         Returns the registered location on success
         Raises HandleError on failure
         """
-        return self.client.create(self.context)
+        location = self.client.create(self.context)
+        if not redirect:
+            return location
+        baseurl = self.context.absolute_url()
+        return self.request.response.redirect(baseurl + "/handle_view")
 
     def read(self):
         """
@@ -53,12 +57,17 @@ class HandleView(BrowserView):
         """
         return self.client.update(self.context)       
 
-    def delete(self):
+    def delete(self, redirect=False):
         """
         Deletes the existing registration
         Returns None on success.
         Raises HandleError on failure
         """
-        return self.client.delete(self.context)       
+        result = self.client.delete(self.context)
+        if not redirect:
+            return result
+        baseurl = self.context.absolute_url()
+        return self.request.response.redirect(baseurl + "/handle_view")
+         
 
         

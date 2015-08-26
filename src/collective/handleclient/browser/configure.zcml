@@ -47,7 +47,6 @@
 	permission="cmf.ModifyPortalContent"
 	/>
 
-
   <browser:page
 	for="plone.uuid.interfaces.IUUIDAware"
 	name="readHandle"
@@ -71,5 +70,14 @@
 	attribute="delete"
 	permission="handleclient.deletehandle"
 	/>
+
+  <browser:page
+	for="plone.uuid.interfaces.IUUIDAware"
+	name="handle_view"
+	class="collective.handleclient.browser.handle.HandleView"
+	template="handle_view.pt"
+	permission="cmf.ModifyPortalContent"
+	/>
+
 
 </configure>
