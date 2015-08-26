@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<object name="portal_actions"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <object name="object">
+  <object name="pid" meta_type="CMF Action" i18n:domain="plone">
+   <property name="title">PID</property>
+   <property name="description">Persistent Identifier</property>
+   <property name="url_expr">string:${object_url}/handle_view</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions">
+    <element value="Modify portal content"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+</object>
