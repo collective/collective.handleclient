@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Setup tests for this package."""
-from collective.handleclient.testing import COLLECTIVE_HANDLECLIENT_INTEGRATION_TESTING  # noqa
+from collective.handleclient.testing \
+  import COLLECTIVE_HANDLECLIENT_INTEGRATION_TESTING  # noqa
 from plone import api
 
 import unittest2 as unittest
@@ -26,9 +27,11 @@ class TestSetup(unittest.TestCase):
 
     def test_browserlayer(self):
         """Test that ICollectiveHandleclientLayer is registered."""
-        from collective.handleclient.interfaces import ICollectiveHandleclientLayer
+        from collective.handleclient.interfaces \
+          import ICollectiveHandleclientLayer
         from plone.browserlayer import utils
-        self.assertIn(ICollectiveHandleclientLayer, utils.registered_layers())
+        self.assertIn(ICollectiveHandleclientLayer,
+                      utils.registered_layers())
 
     def test_configuration(self):
         """Test that the handle_client can be configured"""
