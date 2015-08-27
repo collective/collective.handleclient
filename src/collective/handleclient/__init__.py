@@ -5,7 +5,7 @@ from zope.i18nmessageid import MessageFactory
 
 _ = MessageFactory('collective.handleclient')
 
-from Products.CMFCore import utils 
+from Products.CMFCore import utils
 from Products.CMFCore.permissions import setDefaultRoles
 
 import handle_client
@@ -13,8 +13,7 @@ import handle_client
 setDefaultRoles('Handle Client: Delete Handle', ('Manager',))
 
 # group the tool
-tools = ( handle_client.HandleClient,
-          )
+tools = (handle_client.HandleClient,)
 
 
 def initialize(context):

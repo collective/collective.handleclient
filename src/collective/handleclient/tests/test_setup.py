@@ -17,8 +17,12 @@ class TestSetup(unittest.TestCase):
         self.installer = api.portal.get_tool('portal_quickinstaller')
 
     def test_product_installed(self):
-        """Test if collective.handleclient is installed with portal_quickinstaller."""
-        self.assertTrue(self.installer.isProductInstalled('collective.handleclient'))
+        """
+        Test if collective.handleclient is installed
+        with portal_quickinstaller.
+        """
+        product = 'collective.handleclient'
+        self.assertTrue(self.installer.isProductInstalled(product))
 
     def test_browserlayer(self):
         """Test that ICollectiveHandleclientLayer is registered."""
@@ -30,7 +34,7 @@ class TestSetup(unittest.TestCase):
         """Test that the handle_client can be configured"""
         client = self.portal.handle_client
         request = self.layer['request']
-        initial_config = dict(baseurl='http://example.com', 
+        initial_config = dict(baseurl='http://example.com',
                               username='123',
                               password='secret')
         request.form['config'] = initial_config
@@ -55,5 +59,6 @@ class TestUninstall(unittest.TestCase):
 
     def test_product_uninstalled(self):
         """Test if collective.handleclient is cleanly uninstalled."""
-        # shut up
-        self.assertTrue(self.installer.isProductInstalled('collective.handleclient'))
+        # shut up - not caring about this at the moment
+        product = 'collective.handleclient'
+        self.assertTrue(self.installer.isProductInstalled(product))

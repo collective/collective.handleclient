@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """HandleClient's main class"""
 
 import os
@@ -6,18 +7,18 @@ import requests
 
 # Zope stuff
 from zope.annotation import IAnnotations
-from Globals import InitializeClass 
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 
 # CMF stuff
-from Products.CMFCore.permissions import View, ManagePortal
+from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import UniqueObject
 
 KEY = 'collective.handleclient.handle'
 
 
-class HandleClient(UniqueObject, SimpleItem): 
+class HandleClient(UniqueObject, SimpleItem):
     """
     Tool for managing handle pids.
     """
@@ -29,7 +30,7 @@ class HandleClient(UniqueObject, SimpleItem):
     username = ''
     prefix = ''
     password = ''
-    
+
     security = ClassSecurityInfo()
 
     def create(self, context):
@@ -42,7 +43,7 @@ class HandleClient(UniqueObject, SimpleItem):
         uid = context.UID()
         target = context.absolute_url()
         handle = '/'.join([self.prefix, uid])
-        data = [{'type':'URL', 'parsed_data': target}]
+        data = [{'type': 'URL', 'parsed_data': target}]
 
         resp = self.session.post(
             self.baseurl + handle, json=data
@@ -50,18 +51,18 @@ class HandleClient(UniqueObject, SimpleItem):
         if int(resp.status_code) == 405:  # EPIC doesn't support POST
             resp = self.session.put(
                 self.baseurl + handle, json=data
-                )        
+                )
         if int(resp.status_code) == 201:
             location = resp.headers.get('location')
             annotations = IAnnotations(context)
-            annotations[KEY] = handle            
+            annotations[KEY] = handle
             return location
         else:
             logger = logging.getLogger('collective.handle')
             message = self.baseurl + handle
             message += '\n' + resp + '\n'
-            for k,v in resp.headers.items():
-                message += "%s = %s\n" % (k,v)
+            for k, v in resp.headers.items():
+                message += "%s = %s\n" % (k, v)
             logger.error(message)
             raise HandleError(resp.status_code)
 
@@ -75,7 +76,7 @@ class HandleClient(UniqueObject, SimpleItem):
             return None
         resp = self.session.get(self.baseurl + handle)
         if resp.status_code in [200, 204]:
-            return resp.headers.get("location","") + resp.text
+            return resp.headers.get("location", "") + resp.text
         raise HandleError(resp.status_code)
 
     def update(self, context):
@@ -91,7 +92,7 @@ class HandleClient(UniqueObject, SimpleItem):
         if handle is None:
             return None
         target = context.absolute_url()
-        data = [{'type':'URL', 'parsed_data': target}]
+        data = [{'type': 'URL', 'parsed_data': target}]
         resp = self.session.put(
             self.baseurl + handle, json=data
             )
@@ -111,22 +112,22 @@ class HandleClient(UniqueObject, SimpleItem):
         resp = self.session.delete(self.baseurl + handle)
         if int(resp.status_code) != 204:
             raise HandleError(resp.status_code)
-        self._removeHandle(context)      
-        
+        self._removeHandle(context)
+
     def _getHandle(self, context):
         """
-        Helper method looking up the handle in the context's annotation. 
+        Helper method looking up the handle in the context's annotation.
         Returns None if not existing.
         """
         annotations = IAnnotations(context)
-        return annotations.get(KEY, None)        
+        return annotations.get(KEY, None)
 
     def _removeHandle(self, context):
         annotations = IAnnotations(context)
-        del annotations[KEY]        
-        
+        del annotations[KEY]
+
     # for the tool configuration
-    
+
     security.declareProtected(ManagePortal, 'getConfiguration')
     def getConfiguration(self):
         """returns the config (without password) for the configlet"""
@@ -154,7 +155,7 @@ class HandleClient(UniqueObject, SimpleItem):
 
         username = config.get('username', None)
         prefix = config.get('prefix', None)
-        # only one needs to be given as username and prefix are 
+        # only one needs to be given as username and prefix are
         # usually the same in the handle system
         self.username = username or prefix
         self.prefix = prefix or username
@@ -167,7 +168,7 @@ class HandleClient(UniqueObject, SimpleItem):
         if not self.password:
             password = os.environ['HANDLE_PASSWORD']
         else:
-            password = self.password    
+            password = self.password
         self.session.auth = (self.username, password)
         self.session.verify = verify_ssl
         self.session.headers.update({
@@ -175,13 +176,14 @@ class HandleClient(UniqueObject, SimpleItem):
             'User-Agent': 'collective.handleclient',
             })
 
-    
+
 InitializeClass(HandleClient)
+
 
 class HandleError(Exception):
 
     def __init__(self, status):
-        
+
         messages = {
             400: "400 Bad request.",
             401: "401 Authentication failed.",
@@ -196,7 +198,7 @@ class HandleError(Exception):
         status = int(status)
         message = messages.get(status, None)
         self.message = message or messages.get('default') + str(status)
-        
+
     def __unicode__(self):
         return unicode(self.message)
 

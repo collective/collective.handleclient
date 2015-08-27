@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+
 from zope.annotation import IAnnotations
 from AccessControl import getSecurityManager
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+
 KEY = 'collective.handleclient.handle'  # this should be in config
+
 
 class HandleView(BrowserView):
     """View methods to deal with handle pids"""
@@ -23,7 +27,7 @@ class HandleView(BrowserView):
 
     def handle(self):
         """
-        Looks up the handle in the context's annotation. 
+        Looks up the handle in the context's annotation.
         Returns None if not found.
         """
         annotations = IAnnotations(self.context)
@@ -43,7 +47,7 @@ class HandleView(BrowserView):
 
     def read(self):
         """
-        Gets the current registration from the server 
+        Gets the current registration from the server
         Returns the registered location on success
         Raises HandleError on failure
         """
@@ -51,12 +55,12 @@ class HandleView(BrowserView):
 
     def update(self):
         """
-        Updates the existing registration with the current 
+        Updates the existing registration with the current
         target URL.
         Returns the registered location on success.
         Raises HandleError on failure
         """
-        return self.client.update(self.context)       
+        return self.client.update(self.context)
 
     def delete(self, redirect=False):
         """
@@ -69,12 +73,12 @@ class HandleView(BrowserView):
             return result
         baseurl = self.context.absolute_url()
         return self.request.response.redirect(baseurl + "/handle_view")
-         
+
     def hasDeletePermission(self):
         """
         Helper method to determine whether the current user
         is allowed to unregister a handle.
         """
         sm = getSecurityManager()
-        return sm.checkPermission("Handle Client: Delete Handle", 
+        return sm.checkPermission("Handle Client: Delete Handle",
                                   self.context)
