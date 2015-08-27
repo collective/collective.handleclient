@@ -73,7 +73,7 @@ class TestSetup(unittest.TestCase):
 
         handle = '/'.join([client.prefix, uid])
         handle_url = client.baseurl + handle
-        
+
         response = Mock()
         response.status_code = 201
         response.headers = {"location": handle_url}
