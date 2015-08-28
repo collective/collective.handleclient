@@ -60,7 +60,7 @@ class HandleClient(UniqueObject, SimpleItem):
         else:
             logger = logging.getLogger('collective.handle')
             message = self.baseurl + handle
-            message += '\n' + resp + '\n'
+            message += '\n' + str(resp) + '\n'
             for k, v in resp.headers.items():
                 message += "%s = %s\n" % (k, v)
             logger.error(message)
