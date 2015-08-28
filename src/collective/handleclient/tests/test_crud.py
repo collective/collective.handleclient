@@ -3,7 +3,6 @@
 from collective.handleclient.testing \
   import COLLECTIVE_HANDLECLIENT_INTEGRATION_TESTING  # noqa
 from zope.annotation import IAnnotations
-from plone import api
 
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
@@ -39,7 +38,7 @@ class TestCRUD(unittest.TestCase):
         uid = self.portal.page.UID()
         self.handle = '/'.join([client.prefix, uid])
         self.handle_url = client.baseurl + self.handle
-        
+
     def test_create(self):
         """Test creation of a handle"""
         client = self.portal.handle_client
@@ -75,7 +74,7 @@ class TestCRUD(unittest.TestCase):
         """Test that a failed create request raises HandleError"""
         client = self.portal.handle_client
         page = self.portal.page
-        
+
         response = Mock()
         response.status_code = 403
         response.headers = {"location": self.handle_url}
@@ -83,13 +82,13 @@ class TestCRUD(unittest.TestCase):
         client.session.post = Mock(return_value=response)
         message = "403 You don't have the right to do that."
         with self.assertRaisesRegexp(HandleError, message):
-            hdl = client.create(page)
-        
+            client.create(page)
+
     def test_read_unregistered(self):
         """Test reading the registration of an unregistered object"""
         client = self.portal.handle_client
         page = self.portal.page
-        
+
         response = Mock()
         response.status_code = 204
         response.headers = {"location": self.handle_url}
@@ -107,7 +106,7 @@ class TestCRUD(unittest.TestCase):
         # fake the registration
         annotations = IAnnotations(page)
         annotations[KEY] = self.handle
-        
+
         response = Mock()
         response.status_code = 204
         response.headers = {"location": self.handle_url}
@@ -126,7 +125,7 @@ class TestCRUD(unittest.TestCase):
         # fake the registration
         annotations = IAnnotations(page)
         annotations[KEY] = self.handle
-        
+
         response = Mock()
         response.status_code = 404
         client.session.get = Mock(return_value=response)
@@ -141,7 +140,7 @@ class TestCRUD(unittest.TestCase):
         """
         client = self.portal.handle_client
         page = self.portal.page
-        
+
         response = Mock()
         response.status_code = 204
         response.headers = {"location": self.handle_url}
@@ -159,7 +158,7 @@ class TestCRUD(unittest.TestCase):
         # fake the registration
         annotations = IAnnotations(page)
         annotations[KEY] = self.handle
-        
+
         response = Mock()
         response.status_code = 204
         response.headers = {"location": self.handle_url}
@@ -178,7 +177,7 @@ class TestCRUD(unittest.TestCase):
         # fake the registration
         annotations = IAnnotations(page)
         annotations[KEY] = self.handle
-        
+
         response = Mock()
         response.status_code = 204
 
