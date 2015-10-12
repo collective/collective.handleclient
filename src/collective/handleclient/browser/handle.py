@@ -82,3 +82,17 @@ class HandleView(BrowserView):
         sm = getSecurityManager()
         return sm.checkPermission("Handle Client: Delete Handle",
                                   self.context)
+
+    def creationUrl(self):
+        """
+        Helper method returning the appropriate URL for handle creation
+        """
+        baseurl = self.context.absolute_url()
+        return baseurl + '/createHandle?redirect=True'
+
+    def deletionUrl(self):
+        """
+        Helper method returning the appropriate URL for handle deletion
+        """
+        baseurl = self.context.absolute_url()
+        return baseurl + '/deleteHandle?redirect=True'

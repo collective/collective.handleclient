@@ -18,7 +18,8 @@
 		</p>
 		<p tal:condition="view/hasDeletePermission">
 		  To unregister this object 
-		  <a href="./deleteHandle?redirect=True">click here</a>.
+		  <a href="./deleteHandle?redirect=True"
+		     tal:attributes="href view/deletionUrl">click here</a>.
 		</p>
 		<p tal:condition="not:view/hasDeletePermission">
 		  To unregister this object contact site administration.
@@ -33,7 +34,8 @@
 		</p>
 		<p>
 		  To get a handle for this object 
-		  <a href="./createHandle?redirect=True">click here</a>.
+		  <a href="./createHandle?redirect=True"
+		     tal:attributes="href view/creationUrl">click here</a>.
 	    </div>
     </metal:block>
 
